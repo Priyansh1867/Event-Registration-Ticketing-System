@@ -1,7 +1,7 @@
 # Node.js dependencies
 node_modules/
 backend/node_modules
-# Environment variables
+# Environment variables 
 .env
 backend/.env
 
