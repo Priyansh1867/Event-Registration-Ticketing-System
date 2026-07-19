@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
+    <title>My Dashboard - Ticketing System</title>
     <link rel="stylesheet" href="css/styless.css">
-    <!-- Load particles.js library for background animation -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 </head>
 <body>
-    <!-- particles.js container (for animated background) -->
     <div id="particles-js"></div> 
 
     <nav class="navbar">
         <h1>📅 My Events</h1>
         <div class="nav-links">
-            <a href="index.html">Events</a>
+            <a href="index.html">Discover Events</a>
+            <a href="profile.html">Profile</a>
             <button id="logoutBtn">Logout</button>
         </div>
     </nav>
@@ -24,75 +24,23 @@
         <h2>Available Events</h2>
         <div id="event-list" class="grid"></div>
 
-        <h2 style="margin-top:2rem;">Your Registrations</h2>
+        <h2 style="margin-top:4rem;">Your Tickets & Waitlists</h2>
         <div id="registration-list" class="grid"></div>
     </div>
 
     <script src="js/navbar.js"></script>
     <script src="js/user-dashboard.js"></script>
 
-    <!-- Embedded Particle Configuration Script -->
     <script>
-        // Initialize particles.js for the dark theme background effect
         particlesJS('particles-js', {
             "particles": {
-                "number": {
-                    "value": 80, 
-                    "density": {
-                        "enable": true,
-                        "value_area": 800
-                    }
-                },
-                "color": {
-                    "value": "#ffffff" 
-                },
-                "shape": {
-                    "type": "circle",
-                    "stroke": {
-                        "width": 0,
-                        "color": "#000000"
-                    },
-                },
-                "opacity": {
-                    "value": 0.5,
-                    "random": false,
-                    "anim": { "enable": false }
-                },
-                "size": {
-                    "value": 3,
-                    "random": true,
-                    "anim": { "enable": false }
-                },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 150, 
-                    "color": "#ffffff",
-                    "opacity": 0.4,
-                    "width": 1
-                },
-                "move": {
-                    "enable": true,
-                    "speed": 1, 
-                    "direction": "none",
-                    "random": false,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false,
-                }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                    "onhover": {
-                        "enable": true,
-                        "mode": "grab" 
-                    },
-                    "onclick": {
-                        "enable": true,
-                        "mode": "push" 
-                    },
-                    "resize": true
-                },
+                "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#818cf8" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.3, "random": true },
+                "size": { "value": 4, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#a855f7", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 1 }
             },
             "retina_detect": true
         });

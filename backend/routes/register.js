@@ -16,8 +16,8 @@ router.post("/:eventId", authenticate, registerForEvent);
 // Download ticket
 router.get("/ticket/:regId", authenticate, downloadTicket);
 
-// Verify ticket (Admin only)
-router.post("/verify", authenticate, isAdmin, verifyTicket);
+// Verify ticket (Public - for QR code scanning)
+router.get("/verify/:ticket_code", verifyTicket);
 
 // Cancel registration
 router.delete("/:regId", authenticate, cancelRegistration);

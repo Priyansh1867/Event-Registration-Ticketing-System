@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (token) {
     document.getElementById("loginLink")?.style?.setProperty("display", "none");
     document.getElementById("registerLink")?.style?.setProperty("display", "none");
+    document.getElementById("profileLink")?.style?.setProperty("display", "inline-block");
     document.getElementById("logoutBtn")?.style?.setProperty("display", "inline-block");
   }
 

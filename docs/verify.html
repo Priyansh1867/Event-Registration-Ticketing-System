@@ -4,46 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify Ticket</title>
-    <link rel="stylesheet" href="css/admin-dashboard.css">
+    <link rel="stylesheet" href="css/styless.css">
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <style>
-        .verify-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
-            padding: 30px;
-            text-align: center;
+        .verify-container {
             max-width: 500px;
-            margin: 50px auto;
-            color: #fff;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            margin: 100px auto;
+            text-align: center;
         }
-        .valid {
-            border: 2px solid #34d399;
+        .status-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
         }
-        .invalid {
-            border: 2px solid #ef4444;
+        .details p {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
         }
-        .ticket-details p {
-            margin: 10px 0;
-            font-size: 1.1em;
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: #818cf8;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
         }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
-    <header class="admin-header">
-        <h1>Ticket Verification 🎫</h1>
-        <button id="dashboardBtn" class="logout-btn" onclick="window.location.href='admin-dashboard.html'">Back to Dashboard</button>
-    </header>
+    <nav class="navbar">
+        <h1>🎟 Ticket Verification</h1>
+        <div class="nav-links">
+            <a href="index.html">Back to Home</a>
+        </div>
+    </nav>
 
-    <div class="content-wrapper">
-        <div id="verify-result" class="verify-card">
-            <h2>Verifying Ticket...</h2>
-            <p>Please wait while we check our records.</p>
+    <div class="container verify-container">
+        <div class="card" id="verificationCard">
+            <div id="loadingState">
+                <div class="loading-spinner"></div>
+                <h2>Verifying Ticket...</h2>
+                <p>Please wait while we check this ticket securely.</p>
+            </div>
+            
+            <div id="resultState" style="display: none;">
+                <!-- Filled via JS -->
+            </div>
         </div>
     </div>
 
     <script src="js/verify.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#818cf8" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.3, "random": true },
+                "size": { "value": 4, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#a855f7", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 1 }
+            },
+            "retina_detect": true
+        });
+    </script>
 </body>
 </html>

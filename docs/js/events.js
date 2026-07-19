@@ -10,17 +10,21 @@ async function fetchEvents() {
     const eventsList = document.getElementById("eventsList");
     eventsList.innerHTML = "";
 
-    events.forEach((event) => {
+    events.forEach(ev => {
       const card = document.createElement("div");
       card.className = "card";
-
       card.innerHTML = `
-        <h3>${event.title}</h3>
-        <p><strong>Date:</strong> ${event.date}</p>
-        <p><strong>Time:</strong> ${event.time}</p>
-        <p><strong>Venue:</strong> ${event.venue}</p>
-        <p><strong>Seats:</strong> ${event.available_seats}</p>
-        <div class="card-actions"></div>
+          <div class="card-image-wrapper">
+              <img src="${ev.image_url || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80'}" alt="Event Image">
+              <div class="card-category">${ev.category || 'General'}</div>
+          </div>
+          <h3>${ev.title}</h3>
+          <p>${ev.description || ""}</p>
+          <p><strong>Date:</strong> ${ev.date.split("T")[0]} | <strong>Time:</strong> ${ev.time}</p>
+          <p><strong>Location:</strong> ${ev.venue}</p>
+          <p><strong>Seats:</strong> ${ev.available_seats}/${ev.total_seats}</p>
+          <div class="price-tag">${ev.price && parseFloat(ev.price) > 0 ? '$' + ev.price : 'FREE'}</div>
+          <div class="card-actions" style="margin-top: 1rem; display: flex; gap: 10px;"></div>
       `;
 
       const actionsDiv = card.querySelector(".card-actions");
@@ -28,8 +32,8 @@ async function fetchEvents() {
       // For Students → Register Button
       if (role === "student" || role === null) {
         const registerBtn = document.createElement("button");
-        registerBtn.textContent = "Register 🎟";
-        registerBtn.onclick = () => registerForEvent(event.event_id);
+        registerBtn.textContent = ev.available_seats > 0 ? "Register Now" : "Join Waitlist";
+        registerBtn.onclick = () => registerForEvent(ev.event_id);
         actionsDiv.appendChild(registerBtn);
       }
 
@@ -37,17 +41,28 @@ async function fetchEvents() {
       if (role === "admin") {
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "Delete ❌";
-        deleteBtn.onclick = () => deleteEvent(event.event_id);
+        deleteBtn.style.background = "rgba(239, 68, 68, 0.2)";
+        deleteBtn.style.color = "#ef4444";
+        deleteBtn.onclick = () => deleteEvent(ev.event_id);
         actionsDiv.appendChild(deleteBtn);
 
         const updateBtn = document.createElement("button");
         updateBtn.textContent = "Update ✏️";
-        updateBtn.onclick = () => updateEvent(event.event_id);
+        updateBtn.onclick = () => updateEvent(ev.event_id);
         actionsDiv.appendChild(updateBtn);
       }
 
       eventsList.appendChild(card);
     });
+
+    if (typeof VanillaTilt !== 'undefined') {
+        VanillaTilt.init(document.querySelectorAll("#eventsList .card"), {
+            max: 10,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+        });
+    }
   } catch (err) {
     console.error("Error fetching events", err);
   }
@@ -72,7 +87,7 @@ async function registerForEvent(eventId) {
 
     const data = await res.json();
     if (res.ok) {
-      alert("Registered successfully ✅");
+      alert(data.message + " ✅");
       fetchEvents(); // refresh seat count
     } else {
       alert(data.message || "Registration failed ❌");
@@ -134,5 +149,3 @@ async function updateEvent(eventId) {
 
 // Load events on page load
 document.addEventListener("DOMContentLoaded", fetchEvents);
-
-

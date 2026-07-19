@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="css/styless.css">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <style>
+        .profile-container {
+            max-width: 500px;
+            margin: 80px auto;
+        }
+        .profile-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .profile-card h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #fff;
+            text-align: center;
+        }
+        .profile-card input {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            color: #fff;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        .profile-card input:focus {
+            outline: none;
+            border-color: #818cf8;
+            box-shadow: 0 0 15px rgba(129, 140, 248, 0.3);
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .profile-card button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #4f46e5, #a855f7);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .profile-card button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+        }
+        .role-badge {
+            display: inline-block;
+            background: rgba(168, 85, 247, 0.2);
+            color: #d8b4fe;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <nav class="navbar">
+        <h1>👤 My Profile</h1>
+        <div class="nav-links">
+            <a href="index.html">Discover Events</a>
+            <a href="#" id="dashboardLink" style="display:none;">Dashboard</a>
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container profile-container">
+        <div class="profile-card">
+            <h2>Update Profile</h2>
+            <div style="text-align: center;">
+                <span id="roleBadge" class="role-badge">Loading...</span>
+            </div>
+            
+            <form id="profileForm">
+                <label style="display:block; margin-bottom:8px; color:#cbd5e1; font-size:0.9rem;">Full Name</label>
+                <input type="text" id="name" placeholder="John Doe" required>
+                
+                <label style="display:block; margin-bottom:8px; color:#cbd5e1; font-size:0.9rem;">Email Address</label>
+                <input type="email" id="email" placeholder="john@example.com" required>
+                
+                <label style="display:block; margin-bottom:8px; color:#cbd5e1; font-size:0.9rem;">New Password <span style="opacity: 0.5;">(leave blank to keep current)</span></label>
+                <input type="password" id="password" placeholder="••••••••">
+                
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/navbar.js"></script>
+    <script src="js/profile.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#818cf8" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.3, "random": true },
+                "size": { "value": 4, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#a855f7", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 1 }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>

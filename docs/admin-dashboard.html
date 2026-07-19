@@ -3,39 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Admin Dashboard - Ticketing System</title>
     <link rel="stylesheet" href="css/admin-dashboard.css">
-    <!-- Load particles.js library for background animation -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 </head>
 <body>
-    <!-- particles.js container -->
     <div id="particles-js"></div> 
     
-    <header class="admin-header">
-        <h1>Admin Dashboard 🎛️</h1>
-        <button id="logoutBtn" class="logout-btn">🚪 Logout</button>
-    </header>
+    <nav class="navbar">
+        <h1>Dashboard 🎛️</h1>
+        <div class="nav-links">
+            <a href="index.html">Discover</a>
+            <a href="profile.html">Profile</a>
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </nav>
 
-    <!-- Wrapper for centering and max-width on content -->
-    <div class="content-wrapper"> 
-        <h2>Create Event</h2>
-        
-        <form id="createEventForm">
+    <div class="container"> 
+        <form id="createEventForm" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
+            <h3>Create New Event</h3>
             <input type="text" id="title" placeholder="Event Title" required>
+            <input type="text" id="image_url" placeholder="Event Image URL (Optional)">
+            <select id="category" style="width: 100%; padding: 14px 16px; margin-bottom: 16px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; background: rgba(0, 0, 0, 0.2); color: #fff; font-size: 1rem; font-family: inherit;">
+                <option value="General" style="color: black;">General</option>
+                <option value="Music" style="color: black;">Music & Concerts</option>
+                <option value="Tech" style="color: black;">Tech & IT</option>
+                <option value="Workshop" style="color: black;">Workshop</option>
+            </select>
             <textarea id="description" placeholder="Event Description"></textarea>
-            <input type="date" id="date" required>
-            <input type="time" id="time" required>
+            
+            <div style="display: flex; gap: 1rem;">
+                <input type="date" id="date" required style="flex: 1;">
+                <input type="time" id="time" required style="flex: 1;">
+            </div>
+            
             <input type="text" id="venue" placeholder="Venue" required>
-            <input type="number" id="total_seats" placeholder="Total Seats" required>
-            <button type="submit">Add Event</button>
+            
+            <div style="display: flex; gap: 1rem;">
+                <input type="number" id="total_seats" placeholder="Total Seats" required style="flex: 1;">
+                <input type="number" id="price" placeholder="Price ($0 for Free)" value="0" style="flex: 1;">
+            </div>
+
+            <button type="submit">Publish Event</button>
         </form>
         
-
-        <h2>All Events</h2>
-        <div id="event-list" class="event-container"></div>
+        <h2>All Published Events</h2>
+        <div id="event-list" class="grid"></div>
     </div>
     
     <script src="js/admin-dashboard.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#818cf8" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.3, "random": true },
+                "size": { "value": 4, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#a855f7", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 1 }
+            },
+            "retina_detect": true
+        });
+    </script>
 </body>
 </html>

@@ -135,18 +135,35 @@ document.addEventListener("DOMContentLoaded", () => {
         eventList.innerHTML = "";
         events.forEach(ev => {
             const card = document.createElement("div");
-            card.className = "card"; // Using 'card' class for consistent styling
+            card.className = "card";
             card.innerHTML = `
+                <div class="card-image-wrapper">
+                    <img src="${ev.image_url || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80'}" alt="Event Image">
+                    <div class="card-category">${ev.category || 'General'}</div>
+                </div>
                 <h3>${ev.title}</h3>
                 <p>${ev.description || ""}</p>
                 <p><strong>Date:</strong> ${ev.date.split("T")[0]} | ${ev.time}</p>
                 <p><strong>Location:</strong> ${ev.venue}</p>
                 <p><strong>Seats:</strong> ${ev.available_seats}/${ev.total_seats}</p>
-                <button onclick="deleteEvent(${ev.event_id})">🗑 Delete</button>
-                <button onclick="editEvent(${ev.event_id}, '${ev.title}', '${ev.description}', '${ev.date.split("T")[0]}', '${ev.time}', '${ev.venue}', ${ev.total_seats})">✏ Edit</button>
+                <div class="price-tag">${ev.price && parseFloat(ev.price) > 0 ? '$' + ev.price : 'FREE'}</div>
+                <div style="display:flex; gap: 10px; margin-top: 15px;">
+                    <button onclick="deleteEvent(${ev.event_id})" style="background: rgba(239, 68, 68, 0.2); color: #ef4444; flex: 1;">🗑 Delete</button>
+                    <button onclick="editEvent(${ev.event_id}, '${ev.title}', '${ev.description}', '${ev.date.split("T")[0]}', '${ev.time}', '${ev.venue}', ${ev.total_seats})" style="flex: 1;">✏ Edit</button>
+                </div>
             `;
             eventList.appendChild(card);
         });
+
+        // Initialize 3D Tilt Effect on newly created cards
+        if (typeof VanillaTilt !== 'undefined') {
+            VanillaTilt.init(document.querySelectorAll(".card"), {
+                max: 10,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.2,
+            });
+        }
     }
 
     // ✅ Create Event
@@ -159,7 +176,10 @@ document.addEventListener("DOMContentLoaded", () => {
             date: document.getElementById("date").value,
             time: document.getElementById("time").value,
             venue: document.getElementById("venue").value,
-            total_seats: parseInt(document.getElementById("total_seats").value)
+            total_seats: parseInt(document.getElementById("total_seats").value),
+            category: document.getElementById("category").value,
+            price: document.getElementById("price").value,
+            image_url: document.getElementById("image_url").value
         };
 
         await fetch(API_URL, {

@@ -13,7 +13,6 @@ exports.registerUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // ✅ check if this is the first user
     const userCount = await pool.query("SELECT COUNT(*) FROM users");
     const assignedRole = userCount.rows[0].count === "0" ? "admin" : (role || "student");
 
@@ -59,6 +58,55 @@ exports.loginUser = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.getProfile = async (req, res) => {
+  const userId = req.user.user_id;
+
+  try {
+    const user = await pool.query("SELECT user_id, name, email, role FROM users WHERE user_id = $1", [userId]);
+    if (user.rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user.rows[0]);
+  } catch (err) {
+    console.error("Error fetching profile:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.updateProfile = async (req, res) => {
+  const userId = req.user.user_id;
+  const { name, email, password } = req.body;
+
+  try {
+    // Check if email is already taken by someone else
+    const emailCheck = await pool.query("SELECT user_id FROM users WHERE email = $1 AND user_id != $2", [email, userId]);
+    if (emailCheck.rows.length > 0) {
+      return res.status(400).json({ message: "Email is already in use by another account" });
+    }
+
+    let query = "UPDATE users SET name = $1, email = $2";
+    let values = [name, email];
+    let paramCount = 3;
+
+    if (password && password.trim() !== "") {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      query += `, password = $3`;
+      values.push(hashedPassword);
+      paramCount = 4;
+    }
+
+    query += ` WHERE user_id = $${paramCount} RETURNING user_id, name, email, role`;
+    values.push(userId);
+
+    const updatedUser = await pool.query(query, values);
+
+    res.json({ message: "Profile updated successfully", user: updatedUser.rows[0] });
+  } catch (err) {
+    console.error("Error updating profile:", err);
     res.status(500).json({ message: "Server error" });
   }
 };
