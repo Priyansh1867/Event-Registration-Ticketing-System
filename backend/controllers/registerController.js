@@ -55,8 +55,11 @@ exports.downloadTicket = async (req, res) => {
 
     const ticket = registration.rows[0];
 
-    // Generate QR code (base64 image)
-    const qrDataUrl = await QRCode.toDataURL(ticket.ticket_code);
+    // Verification URL
+    const verifyUrl = `http://localhost:3000/verify.html?code=${ticket.ticket_code}`;
+
+    // Generate QR code (base64 image) pointing to verify URL
+    const qrDataUrl = await QRCode.toDataURL(verifyUrl);
 
     // Generate PDF
     const doc = new PDFDocument();
@@ -77,7 +80,8 @@ exports.downloadTicket = async (req, res) => {
     doc.text(`Email: ${ticket.email}`);
     doc.moveDown();
 
-    doc.text(`Ticket Code: ${ticket.ticket_code}`, { underline: true });
+    doc.text(`Ticket Code: ${ticket.ticket_code}`);
+    doc.text(`Verify Link: ${verifyUrl}`, { link: verifyUrl, underline: true, color: 'blue' });
 
     // Insert QR code
     const qrImage = qrDataUrl.replace(/^data:image\/png;base64,/, "");
@@ -153,12 +157,12 @@ exports.getMyRegistrations = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT r.reg_id, r.ticket_code, r.created_at,
-              e.title, e.date, e.time, e.location
+      `SELECT r.reg_id, r.ticket_code, r.registered_at,
+              e.title, e.date, e.time, e.venue
        FROM registrations r
        JOIN events e ON r.event_id = e.event_id
        WHERE r.user_id = $1
-       ORDER BY r.created_at DESC`,
+       ORDER BY r.registered_at DESC`,
       [userId]
     );
 
