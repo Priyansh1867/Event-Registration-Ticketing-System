@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api"; // backend server
+const API_URL = "https://event-registration-ticketing-system.onrender.com/api"; // backend server
 const token = localStorage.getItem("token");
 const role = localStorage.getItem("role");
 

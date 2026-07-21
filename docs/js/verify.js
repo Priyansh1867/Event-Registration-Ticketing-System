@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api"; // backend server
+const API_URL = "https://event-registration-ticketing-system.onrender.com/api"; // backend server
 
 document.addEventListener("DOMContentLoaded", async () => {
     const urlParams = new URLSearchParams(window.location.search);

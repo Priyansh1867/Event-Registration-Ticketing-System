@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api/events";
+const API_URL = "https://event-registration-ticketing-system.onrender.com/api/events";
 const token = localStorage.getItem("token");
 
 // --- Particle Initialization Function (New) ---

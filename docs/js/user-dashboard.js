@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api"; // ✅ backend base URL
+const API_URL = "https://event-registration-ticketing-system.onrender.com/api"; // ✅ backend base URL
 
 document.addEventListener("DOMContentLoaded", () => {
   const eventList = document.getElementById("event-list");
